@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import {fireEvent, render, screen } from "@testing-library/react";
 import React from "react";
 import Calculator from "./components/Calculator";
 
@@ -40,3 +40,46 @@ describe("Check if equals symbol and close braces exists on screen", () => {
     });
   });
 });
+
+describe("Check if the app is accepting input from screen",() =>{
+  it("check if text box exists", () =>{
+    render(<Calculator/>);
+    
+    //const input = screen.getByRole("textbox", { name: /calcTextBox/i });
+    //expect(input).toBeInTheDocument();
+    expect(screen.queryByTestId('your-id')).toBeInTheDocument();
+  });
+  
+});
+
+describe("Check if the textbox is showing triggered keys",() =>{
+    it("check if clicked button value displayed on textbox",async () =>{
+      render(<Calculator/>);
+      const one = screen.getByText("1");
+      const two = screen.getByText("2");
+      const plus = screen.getByText("+");
+      fireEvent.click(one);
+      fireEvent.click(plus);
+      fireEvent.click(two);
+      const result = await screen.findByPlaceholderText("calculate");
+      // @ts-ignore
+      expect(result.value).toBe("1+2");
+    });
+});
+
+describe("Check if clear all action is working",() =>{
+  it("check if CE button clears all content on textbox", async() =>{
+    render(<Calculator/>);
+    const clearAll= screen.getByText("CE");
+    const one = screen.getByText("1");
+    const two = screen.getByText("2");
+    const plus = screen.getByText("+");
+    fireEvent.click(one);
+    fireEvent.click(plus);
+    fireEvent.click(two);
+    fireEvent.click(clearAll);
+    const result = await screen.findByPlaceholderText("calculate");
+    // @ts-ignore
+    expect(result.value).toBe("");
+  })
+})
