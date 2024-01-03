@@ -82,4 +82,21 @@ describe("Check if clear all action is working",() =>{
     // @ts-ignore
     expect(result.value).toBe("");
   })
+});
+
+describe("Check if clear button removes last entered input",() =>{
+  it("check id C button clears last entered text character",async() =>{
+    render(<Calculator/>);
+    const clear= screen.getByText("C");
+    const one = screen.getByText("1");
+    const two = screen.getByText("2");
+    const plus = screen.getByText("+");
+    fireEvent.click(one);
+    fireEvent.click(two);
+    fireEvent.click(plus);
+    fireEvent.click(clear);
+    const result = await screen.findByPlaceholderText("calculate");
+    // @ts-ignore
+    expect(result.value).toBe("12");
+  })
 })
