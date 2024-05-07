@@ -1,4 +1,6 @@
 import { Fragment, useState, useRef } from "react";
+import { infixToPostfix } from "../utils/EvaluateExpression";
+import { evaluatePostfix } from "../utils/EvaluateExpression";
 
 // @ts-ignore
 export const calculateExpression = (expression) => {
@@ -14,8 +16,12 @@ export const calculateExpression = (expression) => {
       }
   
       // todo - refactor eval later
-      const result = eval(toEvaluate);
-  
+      let postfixExpression = infixToPostfix(toEvaluate);
+      console.log("Postfix Expression:", postfixExpression);
+      let result = evaluatePostfix(postfixExpression);
+      console.log("Result:", result);
+
+      
       return result;
     } catch (err) {
       console.error(err);

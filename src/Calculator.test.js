@@ -24,7 +24,7 @@ describe("Check if calculator buttons are grouped",() =>{
 describe("Check if mathematical operations are listed",() =>{
     it("check if math operators available on screen",() =>{
         render(<Calculator/>);
-        const calcOperators =["+","-","x","÷"];
+        const calcOperators =["+","-","×","÷"];
         calcOperators.forEach((operator) => {
            expect(screen.getByText(operator.toString())).toBeInTheDocument();
         });
